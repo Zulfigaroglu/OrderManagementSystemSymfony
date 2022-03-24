@@ -26,5 +26,16 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\Service\:
+        resource: '../src/Service/'
+        public: true
+
+    App\Service\Infrastructure\ICategoryService $categoryService: '@App\Service\CategoryService'
+    App\Service\Infrastructure\ICostumerService $customerService: '@App\Service\CostumerService'
+    App\Service\Infrastructure\IDiscountService $discountService: '@App\Service\DiscountService'
+    App\Service\Infrastructure\IOrderService $orderService: '@App\Service\OrderService'
+    App\Service\Infrastructure\IProductService $productService: '@App\Service\ProductService'
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
