@@ -40,7 +40,10 @@ class OrderController extends AbstractController
      */
     public function crate(Request $request): Response
     {
-        $orderData = $request->request->all();
+        /**
+         * @var array $orderData
+         */
+        $orderData = $request->getContent();
 
         $order = $this->orderService->create($orderData);
 
@@ -67,7 +70,10 @@ class OrderController extends AbstractController
      */
     public function update(int $id, Request $request): Response
     {
-        $orderData = $request->request->all();
+        /**
+         * @var array $orderData
+         */
+        $orderData = $request->getContent();
         $order = $this->orderService->getById($id);
         $order = $this->orderService->update($order, $orderData);
 

@@ -38,7 +38,10 @@ class CategoryController extends AbstractController
      */
     public function crate(Request $request): Response
     {
-        $categoryData = $request->request->all();
+        /**
+         * @var array $categoryData
+         */
+        $categoryData = $request->getContent();
         $category = $this->categoryService->create($categoryData);
 
         $errors = $this->validate($category);
@@ -64,7 +67,10 @@ class CategoryController extends AbstractController
      */
     public function update(int $id, Request $request): Response
     {
-        $categoryData = $request->request->all();
+        /**
+         * @var array $categoryData
+         */
+        $categoryData = $request->getContent();
         $category = $this->categoryService->getById($id);
         $category = $this->categoryService->update($category, $categoryData);
 
