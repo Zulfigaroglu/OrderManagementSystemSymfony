@@ -2,7 +2,6 @@
 
 namespace App\Controller\Infrastructure;
 
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as AbstractControllerBase;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;

@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Entity\Infrastructure\AbstractEntityWithSoftDelete;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

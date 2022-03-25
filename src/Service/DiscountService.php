@@ -13,11 +13,9 @@ use App\Model\DiscountDetailModel;
 use App\Model\OrderDiscountsModel;
 use App\Repository\CategoryRepository;
 use App\Repository\DiscountRepository;
-use App\Repository\OrderRepository;
 use App\Service\Infrastructure\IDiscountService;
 use App\Service\Infrastructure\IOrderService;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Controller\Infrastructure\AbstractController;
+use App\Service\Infrastructure\IDiscountService;
 use App\Service\Infrastructure\IOrderService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +17,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class OrderController extends AbstractController
 {
     protected IOrderService $orderService;
+    protected IDiscountService $discountService;
 
-    public function __construct(ValidatorInterface $validator, IOrderService $orderService)
+    public function __construct(ValidatorInterface $validator, IOrderService $orderService, IDiscountService $discountService)
     {
         parent::__construct($validator);
         $this->orderService = $orderService;
+        $this->discountService = $discountService;
     }
 
     /**

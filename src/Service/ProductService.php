@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Discount;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;

@@ -6,7 +6,6 @@ use App\Entity\Discount;
 use App\Entity\Order;
 use App\Model\DiscountDetailModel;
 use App\Model\OrderDiscountsModel;
-use Doctrine\Common\Collections\Collection;
 
 interface IDiscountService
 {
