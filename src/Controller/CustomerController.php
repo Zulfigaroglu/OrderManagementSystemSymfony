@@ -37,10 +37,7 @@ class CustomerController extends AbstractController
      */
     public function crate(Request $request): Response
     {
-        /**
-         * @var array $customerData
-         */
-        $customerData = $request->getContent();
+        $customerData = $request->request->all();
         $customer = $this->customerService->create($customerData);
 
         $errors = $this->validate($customer);
@@ -66,10 +63,7 @@ class CustomerController extends AbstractController
      */
     public function update(int $id, Request $request): Response
     {
-        /**
-         * @var array $customerData
-         */
-        $customerData = $request->getContent();
+        $customerData = $request->request->all();
         $customer = $this->customerService->getById($id);
         $customer = $this->customerService->update($customer, $customerData);
 

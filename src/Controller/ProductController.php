@@ -37,10 +37,7 @@ class ProductController extends AbstractController
      */
     public function crate(Request $request): Response
     {
-        /**
-         * @var array $productData
-         */
-        $productData = $request->getContent();
+        $productData = $request->request->all();
         $product = $this->productService->create($productData);
 
         $errors = $this->validate($product);
@@ -66,10 +63,7 @@ class ProductController extends AbstractController
      */
     public function update(int $id, Request $request): Response
     {
-        /**
-         * @var array $productData
-         */
-        $productData = $request->getContent();
+        $productData = $request->request->all();
         $product = $this->productService->getById($id);
         $product = $this->productService->update($product, $productData);
 

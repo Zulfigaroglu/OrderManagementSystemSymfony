@@ -37,10 +37,7 @@ class DiscountController extends AbstractController
      */
     public function crate(Request $request): Response
     {
-        /**
-         * @var array $discountData
-         */
-        $discountData = $request->getContent();
+        $discountData = $request->request->all();
         $discount = $this->discountService->create($discountData);
 
         $errors = $this->validate($discount);
@@ -66,10 +63,7 @@ class DiscountController extends AbstractController
      */
     public function update(int $id, Request $request): Response
     {
-        /**
-         * @var array $discountData
-         */
-        $discountData = $request->getContent();
+        $discountData = $request->request->all();
         $discount = $this->discountService->getById($id);
         $discount = $this->discountService->update($discount, $discountData);
 
