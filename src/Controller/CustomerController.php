@@ -45,7 +45,7 @@ class CustomerController extends AbstractController
 
         $errors = $this->validate($customer);
         if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors]);
+            return new JsonResponse(['errors' => $errors], 422);
         }
 
         $this->customerService->save($customer);
@@ -75,7 +75,7 @@ class CustomerController extends AbstractController
 
         $errors = $this->validate($customer);
         if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors]);
+            return new JsonResponse(['errors' => $errors], 422);
         }
 
         $this->customerService->save($customer);

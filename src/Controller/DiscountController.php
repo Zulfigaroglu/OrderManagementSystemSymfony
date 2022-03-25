@@ -45,7 +45,7 @@ class DiscountController extends AbstractController
 
         $errors = $this->validate($discount);
         if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors]);
+            return new JsonResponse(['errors' => $errors], 422);
         }
 
         $this->discountService->save($discount);
@@ -75,7 +75,7 @@ class DiscountController extends AbstractController
 
         $errors = $this->validate($discount);
         if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors]);
+            return new JsonResponse(['errors' => $errors], 422);
         }
 
         $this->discountService->save($discount);
@@ -101,12 +101,16 @@ class DiscountController extends AbstractController
     }
 
     /**
-     * @Route("/apply/{orderId}", name="discount_apply", methods={"POST"})
+     * @Route("/{id}/apply/{orderId}", name="discount_apply", methods={"POST"})
      */
-    public function apply(int $orderId): Response
+    public function apply(int $id,int $orderId): Response
     {
-        $orderDiscounts = $this->discountService->calculate($orderId);
-        $order = $this->discountService->apply($orderId, $orderDiscounts);
-        return new JsonResponse($order);
+        $discountedOrder = $this->discountService->apply($id, $orderId);
+
+        if(!$discountedOrder){
+            return new JsonResponse(['errors' => ['message' => 'Bu indirim bu siparişe uygulanamaz.']], 422);
+        }
+
+        return new JsonResponse($discountedOrder);
     }
 }

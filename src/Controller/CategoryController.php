@@ -47,7 +47,7 @@ class CategoryController extends AbstractController
 
         $errors = $this->validate($category);
         if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors]);
+            return new JsonResponse(['errors' => $errors], 422);
         }
 
         $this->categoryService->save($category);
@@ -77,7 +77,7 @@ class CategoryController extends AbstractController
 
         $errors = $this->validate($category);
         if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors]);
+            return new JsonResponse(['errors' => $errors], 422);
         }
 
         $this->categoryService->save($category);

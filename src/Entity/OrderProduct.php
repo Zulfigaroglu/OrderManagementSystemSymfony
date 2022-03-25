@@ -36,11 +36,6 @@ class OrderProduct extends AbstractEntityWithSoftDelete
      */
     private ?float $total;
 
-    /**
-     * @ORM\Column(name="discounted_total", type="decimal", precision=10, scale=2)
-     */
-    private ?string $discountedTotal;
-
     public function __construct()
     {
         parent::__construct();
@@ -94,18 +89,6 @@ class OrderProduct extends AbstractEntityWithSoftDelete
         return $this;
     }
 
-    public function getDiscountedTotal(): ?float
-    {
-        return $this->discountedTotal;
-    }
-
-    public function setDiscountedTotal(float $discountedTotal): self
-    {
-        $this->discountedTotal = $discountedTotal;
-
-        return $this;
-    }
-
     public function jsonSerialize(): array
     {
         return [
@@ -114,7 +97,6 @@ class OrderProduct extends AbstractEntityWithSoftDelete
             'productId' => $this->getProduct()->getId(),
             'quantity' => $this->getQuantity(),
             'total' => $this->getTotal(),
-            'discountedTotal' => $this->getDiscountedTotal(),
             'createdAt' => $this->getCreatedAt(),
             'updatedAt' => $this->getUpdatedAt(),
             'deletedAt' => $this->getDeletedAt(),

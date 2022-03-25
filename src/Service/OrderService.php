@@ -57,6 +57,7 @@ class OrderService implements IOrderService
 
             $total = $this->calculateTotal($order);
             $order->setTotal($total);
+            $order->setDiscountedTotal($total);
             return $order;
         } catch (\Exception $e) {
             //TODO: Handle exceptions
@@ -80,17 +81,19 @@ class OrderService implements IOrderService
         try {
             $this->_em->beginTransaction();
 
-            $items = $order->getOrderProducts();
+            $items = clone $order->getOrderProducts();
 
             $order->clearOrderProducts();
             $this->orderRepository->save($order);
 
             foreach ($items as $item) {
+                $item->setOrder($order);
                 $this->orderProductRepository->save($item);
             }
+
             $this->_em->commit();
         } catch (\Exception $e) {
-            $this->_em->rollback();
+            echo $e->getMessage(); die;
             //TODO: Handle exceptions
         }
     }

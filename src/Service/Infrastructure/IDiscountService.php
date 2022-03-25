@@ -33,7 +33,7 @@ interface IDiscountService
 
     public function calculate(int $orderId): OrderDiscountsModel;
 
-    public function apply(int $orderId, OrderDiscountsModel $orderDiscounts): Order;
+    public function apply(int $id,int $orderId): ?Order;
 
     public function applyDiscountToOrder(Discount $discount, Order $order): ?DiscountDetailModel;
 }

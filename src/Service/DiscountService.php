@@ -13,6 +13,7 @@ use App\Model\DiscountDetailModel;
 use App\Model\OrderDiscountsModel;
 use App\Repository\CategoryRepository;
 use App\Repository\DiscountRepository;
+use App\Repository\OrderRepository;
 use App\Service\Infrastructure\IDiscountService;
 use App\Service\Infrastructure\IOrderService;
 use Doctrine\Common\Collections\Collection;
@@ -25,7 +26,6 @@ class DiscountService implements IDiscountService
     protected OrderService $orderService;
     protected DiscountRepository $discountRepository;
     protected CategoryRepository $categoryRepository;
-    protected EntityManagerInterface $_em;
 
     public function __construct(
         IOrderService          $orderService,
@@ -178,10 +178,25 @@ class DiscountService implements IDiscountService
      * @return OrderDiscountsModel
      * @throws Exception
      */
-    public function apply(int $orderId, OrderDiscountsModel $orderDiscounts): Order
+    public function apply(int $id,int $orderId): ?Order
     {
+        $discount = $this->discountRepository->find($id);
         $order = $this->orderService->getById($orderId);
-        // TODO: Save discounts
+
+        $appliableDiscounts = $this->calculate($orderId);
+        $discountDetailWillApply = array_filter($appliableDiscounts->discounts,
+            function (DiscountDetailModel $discountDetail) use ($discount){
+            return $discountDetail->reason == $discount->getName();
+        })[0] ?? null;
+
+        if(!$discountDetailWillApply){
+            return null;
+        }
+
+        $orderTotal = $order->getTotal() - $discountDetailWillApply->amount;
+        $order->setTotal($orderTotal);
+        $this->orderService->save($order);
+
         return $order;
     }
 

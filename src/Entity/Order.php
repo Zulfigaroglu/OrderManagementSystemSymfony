@@ -132,6 +132,19 @@ class Order extends AbstractEntityWithSoftDelete
         return $this;
     }
 
+    /**
+     * @param Collection<int, OrderProduct> $orderProducts
+     * @return $this
+     */
+    public function setOrderProducts(Collection $orderProducts): self
+    {
+        foreach ($orderProducts as $orderProduct) {
+            $this->addOrderProduct($orderProduct);
+        }
+
+        return $this;
+    }
+
     public function clearOrderProducts(): self
     {
         $orderProducts = $this->getOrderProducts();
@@ -142,12 +155,12 @@ class Order extends AbstractEntityWithSoftDelete
         return $this;
     }
 
-
     public function jsonSerialize(): array
     {
         $data = [
             'id' => $this->getId(),
             'total' => $this->getTotal(),
+            'discountedTotal' => $this->getDiscountedTotal(),
             'customerId' => $this->getCustomer()->getId(),
             'createdAt' => $this->getCreatedAt(),
             'updatedAt' => $this->getUpdatedAt(),
