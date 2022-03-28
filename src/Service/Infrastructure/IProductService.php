@@ -27,5 +27,9 @@ interface IProductService
 
     public function attachCategoryById(Product $product, int $categoryId);
 
-    public function calculateTotal(int $id, int $quantity): float;
+    public function increaseStock(Product $product, int $count): Product;
+
+    public function decreaseStock(Product $product, int $count): Product;
+
+    public function calculateTotal(Product $product, int $quantity): float;
 }

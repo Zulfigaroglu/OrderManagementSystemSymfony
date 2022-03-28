@@ -115,9 +115,24 @@ class ProductService implements IProductService
         }
     }
 
-    public function calculateTotal(int $id, int $quantity): float
+    public function increaseStock(Product $product, int $count): Product
     {
-        $product = $this->getById($id);
+        $increasedStock = $product->getStock() + $count;
+
+        $product->setStock($increasedStock);
+        return $product;
+    }
+
+    public function decreaseStock(Product $product, int $count): Product
+    {
+        $decreasedStock = $product->getStock() - $count;
+
+        $product->setStock($decreasedStock);
+        return $product;
+    }
+
+    public function calculateTotal(Product $product, int $quantity): float
+    {
         $total = $product->getPrice() * $quantity;
         return $total;
     }

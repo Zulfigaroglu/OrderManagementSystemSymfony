@@ -36,6 +36,18 @@ services:
     App\Service\Infrastructure\IOrderService $orderService: '@App\Service\OrderService'
     App\Service\Infrastructure\IProductService $productService: '@App\Service\ProductService'
 
+    App\EventListener\OrderProductEventListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\OrderProduct'
+
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'postPersist'
+                entity: 'App\Entity\OrderProduct'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

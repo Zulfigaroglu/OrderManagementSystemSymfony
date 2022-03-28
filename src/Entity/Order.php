@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=Orderepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  * @ORM\Table(name="`order`")
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
@@ -47,7 +47,7 @@ class Order extends AbstractEntityWithSoftDelete
     private float $discountedTotal = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order", orphanRemoval=true, cascade={"persist"})
      * @Assert\Collection(
      *     fields={
      *         "quantity" = @Assert\Positive(message="Ürün sayısı 0 veya negatif değer olamaz."),
@@ -110,6 +110,18 @@ class Order extends AbstractEntityWithSoftDelete
         return $this->orderProducts;
     }
 
+    /**
+     * @param int $id
+     * @return OrderProduct
+     */
+    public function getOrderProductById(int $id): OrderProduct
+    {
+        $orderProduct = $this->orderProducts->filter(function(OrderProduct $orderProduct) use ($id){
+            return $orderProduct->getId() == $id;
+        })->first();
+        return $orderProduct;
+    }
+
     public function addOrderProduct(OrderProduct $orderProduct): self
     {
         if (!$this->orderProducts->contains($orderProduct)) {
@@ -169,6 +181,7 @@ class Order extends AbstractEntityWithSoftDelete
 
         foreach ($this->getOrderProducts() as $orderProduct) {
             $item = [
+                'id' => $orderProduct->getId(),
                 'productId' => $orderProduct->getProduct()->getId(),
                 'unitPrice' => $orderProduct->getProduct()->getPrice(),
                 'quantity' => $orderProduct->getQuantity(),

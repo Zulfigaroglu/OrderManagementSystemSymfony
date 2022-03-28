@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass=OrderProductRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\OrderProductRepository")
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
@@ -28,12 +28,12 @@ class OrderProduct extends AbstractEntityWithSoftDelete
     /**
      * @ORM\Column(type="integer")
      */
-    private ?int $quantity;
+    private int $quantity = 0;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      */
-    private ?float $total;
+    private float $total = 0;
 
     public function __construct()
     {

@@ -17,22 +17,22 @@ class OrderService implements IOrderService
     protected EntityManagerInterface $_em;
     protected IProductService $productService;
     protected OrderRepository $orderRepository;
-    protected OrderProductRepository $orderProductRepository;
     protected CustomerRepository $customerRepository;
+    protected OrderProductRepository $orderProductRepository;
 
     public function __construct(
         EntityManagerInterface $em,
-        IProductService        $productService,
         OrderRepository        $orderRepository,
-        OrderProductRepository $orderProductRepository,
-        CustomerRepository     $customerRepository
+        IProductService        $productService,
+        CustomerRepository     $customerRepository,
+        OrderProductRepository $orderProductRepository
     )
     {
         $this->_em = $em;
         $this->productService = $productService;
         $this->orderRepository = $orderRepository;
-        $this->orderProductRepository = $orderProductRepository;
         $this->customerRepository = $customerRepository;
+        $this->orderProductRepository = $orderProductRepository;
     }
 
     /**
@@ -53,7 +53,13 @@ class OrderService implements IOrderService
         try {
             $order = new Order();
             $this->updateProperties($order, $orderData);
-            $this->setItems($order, $orderData['items']);
+
+            $itemsData = $orderData['items'];
+            foreach ($itemsData as $itemData) {
+                $productId = $itemData['productId'];
+                $quantity = $itemData['quantity'];
+                $this->attachProductById($order, $productId, $quantity);
+            }
 
             $total = $this->calculateTotal($order);
             $order->setTotal($total);
@@ -69,6 +75,17 @@ class OrderService implements IOrderService
     {
         try {
             $this->updateProperties($order, $orderData);
+
+            $itemsData = $orderData['items'];
+            foreach ($itemsData as $itemData) {
+                $orderProductId = $itemData['id'];
+                $orderProduct = $order->getOrderProductById($orderProductId);
+                $orderProduct->setQuantity($itemData['quantity']);
+            }
+
+            $total = $this->calculateTotal($order);
+            $order->setTotal($total);
+            $order->setDiscountedTotal($total);
             return $order;
         } catch (\Exception $e) {
             //TODO: Handle exceptions
@@ -76,28 +93,32 @@ class OrderService implements IOrderService
         }
     }
 
+    /**
+     * @param Order $order
+     * @return void
+     */
     public function save(Order $order)
     {
         try {
             $this->_em->beginTransaction();
 
-            $items = clone $order->getOrderProducts();
-
-            $order->clearOrderProducts();
-            $this->orderRepository->save($order);
-
-            foreach ($items as $item) {
-                $item->setOrder($order);
-                $this->orderProductRepository->save($item);
+            if ($order->getId()) {
+                $order->getOrderProducts()->forAll(function (int $index, OrderProduct $orderProduct) {
+                    $this->orderProductRepository->save($orderProduct);
+                });
             }
+            $this->orderRepository->save($order);
 
             $this->_em->commit();
         } catch (\Exception $e) {
-            echo $e->getMessage(); die;
             //TODO: Handle exceptions
         }
     }
 
+    /**
+     * @param Order $order
+     * @return void
+     */
     public function delete(Order $order)
     {
         try {
@@ -107,6 +128,10 @@ class OrderService implements IOrderService
         }
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function deleteById(int $id)
     {
         try {
@@ -117,6 +142,11 @@ class OrderService implements IOrderService
         }
     }
 
+    /**
+     * @param Order $order
+     * @param array $orderData
+     * @return void
+     */
     public function updateProperties(Order $order, array $orderData)
     {
         if (array_key_exists('customerId', $orderData)) {
@@ -126,18 +156,9 @@ class OrderService implements IOrderService
 
     /**
      * @param Order $order
-     * @param array $orderProductsData
+     * @param int $customerId
      * @return void
      */
-    public function setItems(Order $order, array $orderProductsData)
-    {
-        foreach ($orderProductsData as $orderProductData) {
-            $productId = $orderProductData['productId'];
-            $quantity = $orderProductData['quantity'];
-            $this->attachProductById($order, $productId, $quantity);
-        }
-    }
-
     public function attachCustomerById(Order $order, int $customerId)
     {
         if (!$customerId) {
@@ -151,6 +172,12 @@ class OrderService implements IOrderService
         }
     }
 
+    /**
+     * @param Order $order
+     * @param int $productId
+     * @param int $quantity
+     * @return void
+     */
     public function attachProductById(Order $order, int $productId, int $quantity = 1)
     {
         $orderProduct = new OrderProduct();
@@ -161,10 +188,14 @@ class OrderService implements IOrderService
         $product = $this->productService->getById($productId);
         $orderProduct->setProduct($product);
 
-        $total = $this->productService->calculateTotal($productId, $quantity);
+        $total = $this->productService->calculateTotal($product, $quantity);
         $orderProduct->setTotal($total);
     }
 
+    /**
+     * @param Order $order
+     * @return float
+     */
     public function calculateTotal(Order $order): float
     {
         $orderProducts = $order->getOrderProducts();

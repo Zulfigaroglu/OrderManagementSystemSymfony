@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
@@ -90,17 +90,12 @@ class Product extends AbstractEntityWithSoftDelete
         return $this;
     }
 
-    public function setCategoryId($categoryId): void
-    {
-        $this->categoryId = $categoryId;
-    }
-
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'categoryId' => $this->getCategory()->getId(),
+            'categoryId' => $this->getCategory() ? $this->getCategory()->getId() : null,
             'price' => $this->getPrice(),
             'stock' => $this->getStock(),
             'createdAt' => $this->getCreatedAt(),
