@@ -2,7 +2,7 @@
 
 namespace App\Enum\Infrastructure;
 
-interface Arrayable
+interface ArrayableInterface
 {
     public static function toArray(): array;
 }

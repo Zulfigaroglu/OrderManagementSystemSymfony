@@ -4,7 +4,7 @@ namespace App\Entity\Infrastructure;
 
 use Doctrine\ORM\Mapping as ORM;
 
-abstract class AbstractEntityWithSoftDelete extends AbstractEntity implements ISoftDeletable
+abstract class AbstractEntityWithSoftDelete extends AbstractEntityInterface implements ISoftDeletable
 {
     protected $serializeFields = [
         'id',

@@ -3,6 +3,6 @@
 namespace App\Model\Infrastructure;
 
 
-abstract class Model
+abstract class AbstractModel
 {
 }

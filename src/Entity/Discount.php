@@ -47,7 +47,7 @@ class Discount extends AbstractEntityWithSoftDelete
 
     /**
      * @ORM\Column(name="condition_type", type="string", length=255, columnDefinition="enum('higher_than_value','each_times_of_value')")
-     * @Assert\Choice(callback={"DiscountConditionType", "toArray"}, message="İndirim koşulu tipi hatalı.")
+     * @Assert\Choice(callback={"App\Enum\DiscountConditionType", "toArray"}, message="İndirim koşulu tipi hatalı.")
      */
     private $conditionType;
 
@@ -60,13 +60,13 @@ class Discount extends AbstractEntityWithSoftDelete
 
     /**
      * @ORM\Column(name="policy_subject", type="string", length=255, columnDefinition="enum('order','any_item','cheapest_item')")
-     * @Assert\Choice(callback={"DiscountPolicySubject", "toArray"}, message="İndirim konusu hatalı.")
+     * @Assert\Choice(callback={"App\Enum\DiscountPolicySubject", "toArray"}, message="İndirim konusu hatalı.")
      */
     private $policySubject;
 
     /**
      * @ORM\Column(name="policy_type", type="string", length=255, columnDefinition="enum('discount_by_percantage','discount_by_total','give_free')")
-     * @Assert\Choice(callback={"DiscountPolicyType", "toArray"}, message="İndirim tipi hatalı.")
+     * @Assert\Choice(callback={"App\Enum\DiscountPolicyType", "toArray"}, message="İndirim tipi hatalı.")
      */
     private $policyType;
 

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Infrastructure\AbstractController;
-use App\Service\Infrastructure\ICategoryService;
+use App\Service\Infrastructure\CategoryServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,9 +16,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class CategoryController extends AbstractController
 {
-    protected ICategoryService $categoryService;
+    protected CategoryServiceInterface $categoryService;
 
-    public function __construct(ValidatorInterface $validator, ICategoryService $categoryService)
+    public function __construct(ValidatorInterface $validator, CategoryServiceInterface $categoryService)
     {
         parent::__construct($validator);
         $this->categoryService = $categoryService;

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Infrastructure\AbstractController;
-use App\Service\Infrastructure\IProductService;
+use App\Service\Infrastructure\ProductServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ProductController extends AbstractController
 {
-    protected IProductService $productService;
+    protected ProductServiceInterface $productService;
 
-    public function __construct(ValidatorInterface $validator,IProductService $productService)
+    public function __construct(ValidatorInterface $validator, ProductServiceInterface $productService)
     {
         parent::__construct($validator);
         $this->productService = $productService;

@@ -9,7 +9,7 @@ use JsonSerializable;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks()
  */
-abstract class AbstractEntity implements IEntity, JsonSerializable
+abstract class AbstractEntityInterface implements EntityInterface, JsonSerializable
 {
     protected $serializeFields = [
         'id',

@@ -4,7 +4,7 @@ namespace App\Service\Infrastructure;
 
 use App\Entity\Order;
 
-interface IOrderService
+interface OrderServiceInterface
 {
     /**
      * @return Order[]

@@ -7,7 +7,7 @@ use App\Entity\Order;
 use App\Model\DiscountDetailModel;
 use App\Model\OrderDiscountsModel;
 
-interface IDiscountService
+interface DiscountServiceInterface
 {
     /**
      * @return Discount[]

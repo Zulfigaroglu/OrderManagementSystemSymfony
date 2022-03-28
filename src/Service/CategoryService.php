@@ -4,10 +4,10 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
-use App\Service\Infrastructure\ICategoryService;
+use App\Service\Infrastructure\CategoryServiceInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class CategoryService implements ICategoryService
+class CategoryService implements CategoryServiceInterface
 {
     protected CategoryRepository $categoryRepository;
 

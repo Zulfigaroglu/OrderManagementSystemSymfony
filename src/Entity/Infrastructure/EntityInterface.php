@@ -2,7 +2,7 @@
 
 namespace App\Entity\Infrastructure;
 
-interface IEntity
+interface EntityInterface
 {
     public function getId(): ?int;
 

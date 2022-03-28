@@ -7,25 +7,25 @@ use App\Entity\OrderProduct;
 use App\Repository\CustomerRepository;
 use App\Repository\OrderProductRepository;
 use App\Repository\OrderRepository;
-use App\Service\Infrastructure\IOrderService;
-use App\Service\Infrastructure\IProductService;
+use App\Service\Infrastructure\OrderServiceInterface;
+use App\Service\Infrastructure\ProductServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class OrderService implements IOrderService
+class OrderService implements OrderServiceInterface
 {
     protected EntityManagerInterface $_em;
-    protected IProductService $productService;
+    protected ProductServiceInterface $productService;
     protected OrderRepository $orderRepository;
     protected CustomerRepository $customerRepository;
     protected OrderProductRepository $orderProductRepository;
 
     public function __construct(
-        EntityManagerInterface $em,
-        OrderRepository        $orderRepository,
-        IProductService        $productService,
-        CustomerRepository     $customerRepository,
-        OrderProductRepository $orderProductRepository
+        EntityManagerInterface  $em,
+        OrderRepository         $orderRepository,
+        ProductServiceInterface $productService,
+        CustomerRepository      $customerRepository,
+        OrderProductRepository  $orderProductRepository
     )
     {
         $this->_em = $em;

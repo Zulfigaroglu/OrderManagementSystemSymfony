@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Infrastructure\AbstractController;
-use App\Service\Infrastructure\IDiscountService;
+use App\Service\Infrastructure\DiscountServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class DiscountController extends AbstractController
 {
-    protected IDiscountService $discountService;
+    protected DiscountServiceInterface $discountService;
 
-    public function __construct(ValidatorInterface $validator, IDiscountService $discountService)
+    public function __construct(ValidatorInterface $validator, DiscountServiceInterface $discountService)
     {
         parent::__construct($validator);
         $this->discountService = $discountService;

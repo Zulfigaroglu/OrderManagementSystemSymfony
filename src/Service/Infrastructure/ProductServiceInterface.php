@@ -4,7 +4,7 @@ namespace App\Service\Infrastructure;
 
 use App\Entity\Product;
 
-interface IProductService
+interface ProductServiceInterface
 {
     /**
      * @return Product[]

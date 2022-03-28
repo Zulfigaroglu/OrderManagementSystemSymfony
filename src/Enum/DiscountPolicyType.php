@@ -2,9 +2,9 @@
 
 namespace App\Enum;
 
-use App\Enum\Infrastructure\Arrayable;
+use App\Enum\Infrastructure\ArrayableInterface;
 
-class DiscountPolicyType implements Arrayable
+class DiscountPolicyType implements ArrayableInterface
 {
     const DISCOUNT_BY_PERCENTAGE = 'discount_by_percantage';
     const DISCOUNT_BY_TOTAL = 'discount_by_total';

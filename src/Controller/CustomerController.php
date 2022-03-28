@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Infrastructure\AbstractController;
-use App\Service\Infrastructure\ICustomerService;
+use App\Service\Infrastructure\CustomerServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class CustomerController extends AbstractController
 {
-    protected ICustomerService $customerService;
+    protected CustomerServiceInterface $customerService;
 
-    public function __construct(ValidatorInterface $validator, ICustomerService $customerService)
+    public function __construct(ValidatorInterface $validator, CustomerServiceInterface $customerService)
     {
         parent::__construct($validator);
         $this->customerService = $customerService;

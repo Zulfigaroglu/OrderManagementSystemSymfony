@@ -4,10 +4,10 @@ namespace App\Service;
 
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
-use App\Service\Infrastructure\ICustomerService;
+use App\Service\Infrastructure\CustomerServiceInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class CustomerService implements ICustomerService
+class CustomerService implements CustomerServiceInterface
 {
     protected CustomerRepository $customerRepository;
 

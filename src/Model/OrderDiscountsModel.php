@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use App\Model\Infrastructure\Model;
+use App\Model\Infrastructure\AbstractModel;
 
-class OrderDiscountsModel extends Model
+class OrderDiscountsModel extends AbstractModel
 {
     public int $orderId;
 

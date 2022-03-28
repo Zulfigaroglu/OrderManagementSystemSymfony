@@ -4,7 +4,7 @@ namespace App\Service\Infrastructure;
 
 use App\Entity\Category;
 
-interface ICategoryService
+interface CategoryServiceInterface
 {
     /**
      * @return Category[]

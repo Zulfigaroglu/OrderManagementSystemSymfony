@@ -4,7 +4,7 @@ namespace App\Service\Infrastructure;
 
 use App\Entity\Customer;
 
-interface ICustomerService
+interface CustomerServiceInterface
 {
     /**
      * @return Customer[]

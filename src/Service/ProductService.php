@@ -5,10 +5,10 @@ namespace App\Service;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
-use App\Service\Infrastructure\IProductService;
+use App\Service\Infrastructure\ProductServiceInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class ProductService implements IProductService
+class ProductService implements ProductServiceInterface
 {
     protected ProductRepository $productRepository;
     protected CategoryRepository $categoryRepository;

@@ -13,22 +13,22 @@ use App\Model\DiscountDetailModel;
 use App\Model\OrderDiscountsModel;
 use App\Repository\CategoryRepository;
 use App\Repository\DiscountRepository;
-use App\Service\Infrastructure\IDiscountService;
-use App\Service\Infrastructure\IOrderService;
+use App\Service\Infrastructure\DiscountServiceInterface;
+use App\Service\Infrastructure\OrderServiceInterface;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class DiscountService implements IDiscountService
+class DiscountService implements DiscountServiceInterface
 {
     protected OrderService $orderService;
     protected DiscountRepository $discountRepository;
     protected CategoryRepository $categoryRepository;
 
     public function __construct(
-        IOrderService          $orderService,
-        DiscountRepository     $discountRepository,
-        CategoryRepository     $categoryRepository
+        OrderServiceInterface $orderService,
+        DiscountRepository    $discountRepository,
+        CategoryRepository    $categoryRepository
     )
     {
         $this->orderService = $orderService;

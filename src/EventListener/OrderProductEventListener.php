@@ -3,15 +3,15 @@
 namespace App\EventListener;
 
 use App\Entity\OrderProduct;
-use App\Service\Infrastructure\IProductService;
+use App\Service\Infrastructure\ProductServiceInterface;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class OrderProductEventListener
 {
-    protected IProductService $productService;
+    protected ProductServiceInterface $productService;
 
-    public function __construct(IProductService $productService)
+    public function __construct(ProductServiceInterface $productService)
     {
         $this->productService = $productService;
     }
