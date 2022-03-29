@@ -44,10 +44,8 @@ class CategoryController extends AbstractController
         $categoryData = $request->getContent();
         $category = $this->categoryService->create($categoryData);
 
-        $errors = $this->validate($category);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($category);
+
 
         $this->categoryService->save($category);
         return new JsonResponse($category);
@@ -74,10 +72,7 @@ class CategoryController extends AbstractController
         $category = $this->categoryService->getById($id);
         $category = $this->categoryService->update($category, $categoryData);
 
-        $errors = $this->validate($category);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($category);
 
         $this->categoryService->save($category);
         return new JsonResponse($category);

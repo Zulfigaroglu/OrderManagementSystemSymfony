@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Infrastructure\AbstractEntityWithSoftDelete;
+use App\Entity\Infrastructure\AbstractEntity;
+use App\Entity\Infrastructure\SoftDeleteTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,8 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class Product extends AbstractEntityWithSoftDelete
+class Product extends AbstractEntity
 {
+    use SoftDeleteTrait;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull(message="Ürün adı giriniz.")

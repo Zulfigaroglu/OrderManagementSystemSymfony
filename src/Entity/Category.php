@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Infrastructure\AbstractEntityWithSoftDelete;
+use App\Entity\Infrastructure\AbstractEntity;
+use App\Entity\Infrastructure\SoftDeleteTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,8 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class Category extends AbstractEntityWithSoftDelete
+class Category extends AbstractEntity
 {
+    use SoftDeleteTrait;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull(message="Kategori ismi giriniz.")

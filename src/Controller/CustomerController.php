@@ -43,10 +43,7 @@ class CustomerController extends AbstractController
         $customerData = $request->getContent();
         $customer = $this->customerService->create($customerData);
 
-        $errors = $this->validate($customer);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($customer);
 
         $this->customerService->save($customer);
         return new JsonResponse($customer);
@@ -73,10 +70,7 @@ class CustomerController extends AbstractController
         $customer = $this->customerService->getById($id);
         $customer = $this->customerService->update($customer, $customerData);
 
-        $errors = $this->validate($customer);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($customer);
 
         $this->customerService->save($customer);
         return new JsonResponse($customer);

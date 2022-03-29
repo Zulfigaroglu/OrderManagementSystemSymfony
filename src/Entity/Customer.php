@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Infrastructure\AbstractEntityWithSoftDelete;
+use App\Entity\Infrastructure\AbstractEntity;
+use App\Entity\Infrastructure\SoftDeleteTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,8 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      message="Bu mail adresi ile kayıtlı kullanıcı bulunmaktadır.",
  * )
  */
-class Customer extends AbstractEntityWithSoftDelete
+class Customer extends AbstractEntity
 {
+    use SoftDeleteTrait;
+
     protected $serializeFields = [
         'id',
         'name',

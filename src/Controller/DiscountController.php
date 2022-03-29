@@ -43,10 +43,7 @@ class DiscountController extends AbstractController
         $discountData = $request->getContent();
         $discount = $this->discountService->create($discountData);
 
-        $errors = $this->validate($discount);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($discount);
 
         $this->discountService->save($discount);
         return new JsonResponse($discount);
@@ -73,10 +70,7 @@ class DiscountController extends AbstractController
         $discount = $this->discountService->getById($id);
         $discount = $this->discountService->update($discount, $discountData);
 
-        $errors = $this->validate($discount);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($discount);
 
         $this->discountService->save($discount);
         return new JsonResponse($discount);

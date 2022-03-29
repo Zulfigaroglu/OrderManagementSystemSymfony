@@ -43,10 +43,7 @@ class ProductController extends AbstractController
         $productData = $request->getContent();
         $product = $this->productService->create($productData);
 
-        $errors = $this->validate($product);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($product);
 
         $this->productService->save($product);
         return new JsonResponse($product);
@@ -73,10 +70,7 @@ class ProductController extends AbstractController
         $product = $this->productService->getById($id);
         $product = $this->productService->update($product, $productData);
 
-        $errors = $this->validate($product);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($product);
 
         $this->productService->save($product);
         return new JsonResponse($product);

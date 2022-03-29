@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Infrastructure\AbstractEntityWithSoftDelete;
+use App\Entity\Infrastructure\AbstractEntity;
+use App\Entity\Infrastructure\SoftDeleteTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,8 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class Order extends AbstractEntityWithSoftDelete
+class Order extends AbstractEntity
 {
+    use SoftDeleteTrait;
+
     protected $serializeFields = [
         'id',
         'customer',
@@ -66,6 +69,9 @@ class Order extends AbstractEntityWithSoftDelete
         $this->orderProducts = new ArrayCollection();
     }
 
+    /**
+     * @return Customer|null
+     */
     public function getCustomer(): ?Customer
     {
         return $this->customer;

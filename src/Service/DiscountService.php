@@ -208,6 +208,7 @@ class DiscountService implements DiscountServiceInterface
     {
         $discountCategory = $discount->getCategory();
         $discountCategoryId = $discountCategory ? $discountCategory->getId() : null;
+
         $items = $this->getItemsFromOrderByCategoryId($order, $discountCategoryId);
         if ($items->count() == 0) {
             return null;

@@ -47,10 +47,7 @@ class OrderController extends AbstractController
 
         $order = $this->orderService->create($orderData);
 
-        $errors = $this->validate($order);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($order);
 
         $this->orderService->save($order);
         return new JsonResponse($order);
@@ -77,10 +74,7 @@ class OrderController extends AbstractController
         $order = $this->orderService->getById($id);
         $order = $this->orderService->update($order, $orderData);
 
-        $errors = $this->validate($order);
-        if(count($errors) > 0){
-            return new JsonResponse(['errors' => $errors], 422);
-        }
+        $this->validate($order);
 
         $this->orderService->save($order);
         return new JsonResponse($order);

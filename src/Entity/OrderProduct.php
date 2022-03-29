@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Infrastructure\AbstractEntityWithSoftDelete;
+use App\Entity\Infrastructure\AbstractEntity;
+use App\Entity\Infrastructure\SoftDeleteTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -11,8 +12,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class OrderProduct extends AbstractEntityWithSoftDelete
+class OrderProduct extends AbstractEntity
 {
+    use SoftDeleteTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderProducts")
      * @ORM\JoinColumn(nullable=false)
