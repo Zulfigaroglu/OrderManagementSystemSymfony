@@ -4,15 +4,8 @@ namespace App\Entity\Infrastructure;
 
 use Doctrine\ORM\Mapping as ORM;
 
-abstract class AbstractEntityWithSoftDelete extends AbstractEntityInterface implements ISoftDeletable
+trait SoftDeleteTrait
 {
-    protected $serializeFields = [
-        'id',
-        'createdAt',
-        'createdAt',
-        'deletedAt',
-    ];
-
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */

@@ -9,7 +9,7 @@ use JsonSerializable;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks()
  */
-abstract class AbstractEntityInterface implements EntityInterface, JsonSerializable
+abstract class AbstractEntity implements EntityInterface, JsonSerializable
 {
     protected $serializeFields = [
         'id',
@@ -20,6 +20,7 @@ abstract class AbstractEntityInterface implements EntityInterface, JsonSerializa
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable('now');
     }
 
     /**
