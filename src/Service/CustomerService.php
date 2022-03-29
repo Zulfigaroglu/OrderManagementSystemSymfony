@@ -3,14 +3,22 @@
 namespace App\Service;
 
 use App\Entity\Customer;
+use App\Exception\NotFoundException;
 use App\Repository\CustomerRepository;
 use App\Service\Infrastructure\CustomerServiceInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+
 class CustomerService implements CustomerServiceInterface
 {
+    /**
+     * @var CustomerRepository
+     */
     protected CustomerRepository $customerRepository;
 
+    /**
+     * @param CustomerRepository $customerRepository
+     */
     public function __construct(CustomerRepository $customerRepository)
     {
         $this->customerRepository = $customerRepository;
@@ -24,11 +32,26 @@ class CustomerService implements CustomerServiceInterface
         return $this->customerRepository->findAll();
     }
 
+    /**
+     * @param int $id
+     * @return Customer
+     * @throws NotFoundException
+     */
     public function getById(int $id): Customer
     {
-        return $this->customerRepository->find($id);
+        $customer = $this->customerRepository->find($id);
+
+        if (!$customer) {
+            throw new NotFoundException();
+        }
+
+        return $customer;
     }
 
+    /**
+     * @param array $customerData
+     * @return Customer
+     */
     public function create(array $customerData): Customer
     {
         try {
@@ -41,6 +64,11 @@ class CustomerService implements CustomerServiceInterface
         }
     }
 
+    /**
+     * @param Customer $customer
+     * @param array $customerData
+     * @return Customer
+     */
     public function update(Customer $customer, array $customerData): Customer
     {
         try {
@@ -52,6 +80,10 @@ class CustomerService implements CustomerServiceInterface
         }
     }
 
+    /**
+     * @param Customer $customer
+     * @return void
+     */
     public function save(Customer $customer)
     {
         try {
@@ -62,6 +94,10 @@ class CustomerService implements CustomerServiceInterface
         }
     }
 
+    /**
+     * @param Customer $customer
+     * @return void
+     */
     public function delete(Customer $customer)
     {
         try {
@@ -72,6 +108,10 @@ class CustomerService implements CustomerServiceInterface
         }
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function deleteById(int $id)
     {
         try {
@@ -83,6 +123,11 @@ class CustomerService implements CustomerServiceInterface
         }
     }
 
+    /**
+     * @param Customer $customer
+     * @param array $customerData
+     * @return void
+     */
     public function updateProperties(Customer $customer, array $customerData)
     {
         if (array_key_exists('name', $customerData)) {

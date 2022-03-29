@@ -15,8 +15,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class CustomerController extends AbstractController
 {
+    /**
+     * @var CustomerServiceInterface
+     */
     protected CustomerServiceInterface $customerService;
 
+    /**
+     * @param ValidatorInterface $validator
+     * @param CustomerServiceInterface $customerService
+     */
     public function __construct(ValidatorInterface $validator, CustomerServiceInterface $customerService)
     {
         parent::__construct($validator);

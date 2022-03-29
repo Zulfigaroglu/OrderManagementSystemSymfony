@@ -10,6 +10,9 @@ class DiscountConditionSubject implements ArrayableInterface
     const PRODUCT_QUANTITY = 'product_quantity';
     const ITEM_COUNT = 'item_count';
 
+    /**
+     * @return string[]
+     */
     public static function toArray(): array
     {
         return [

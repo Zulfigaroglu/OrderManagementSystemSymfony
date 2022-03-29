@@ -14,11 +14,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DiscountRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Discount::class);
     }
 
+    /**
+     * @param Discount $discount
+     * @param bool $flush
+     * @return void
+     */
     public function save(Discount $discount, bool $flush = true): void
     {
         $this->_em->persist($discount);
@@ -27,6 +35,11 @@ class DiscountRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Discount $discount
+     * @param bool $flush
+     * @return void
+     */
     public function remove(Discount $discount, bool $flush = true): void
     {
         $this->_em->remove($discount);

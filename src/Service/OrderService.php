@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Order;
 use App\Entity\OrderProduct;
+use App\Exception\NotFoundException;
 use App\Repository\CustomerRepository;
 use App\Repository\OrderProductRepository;
 use App\Repository\OrderRepository;
@@ -14,12 +15,38 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class OrderService implements OrderServiceInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
     protected EntityManagerInterface $_em;
+
+    /**
+     * @var ProductServiceInterface
+     */
     protected ProductServiceInterface $productService;
+
+    /**
+     * @var OrderRepository
+     */
     protected OrderRepository $orderRepository;
+
+    /**
+     * @var CustomerRepository
+     */
     protected CustomerRepository $customerRepository;
+
+    /**
+     * @var OrderProductRepository
+     */
     protected OrderProductRepository $orderProductRepository;
 
+    /**
+     * @param EntityManagerInterface $em
+     * @param OrderRepository $orderRepository
+     * @param ProductServiceInterface $productService
+     * @param CustomerRepository $customerRepository
+     * @param OrderProductRepository $orderProductRepository
+     */
     public function __construct(
         EntityManagerInterface  $em,
         OrderRepository         $orderRepository,
@@ -43,11 +70,26 @@ class OrderService implements OrderServiceInterface
         return $this->orderRepository->findAll();
     }
 
+    /**
+     * @param int $id
+     * @return Order
+     * @throws NotFoundException
+     */
     public function getById(int $id): Order
     {
-        return $this->orderRepository->find($id);
+        $order = $this->orderRepository->find($id);
+
+        if (!$order) {
+            throw new NotFoundException();
+        }
+
+        return $order;
     }
 
+    /**
+     * @param array $orderData
+     * @return Order
+     */
     public function create(array $orderData): Order
     {
         try {
@@ -71,6 +113,11 @@ class OrderService implements OrderServiceInterface
         }
     }
 
+    /**
+     * @param Order $order
+     * @param array $orderData
+     * @return Order
+     */
     public function update(Order $order, array $orderData): Order
     {
         try {

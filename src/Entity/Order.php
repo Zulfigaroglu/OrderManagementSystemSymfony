@@ -20,6 +20,9 @@ class Order extends AbstractEntity
 {
     use SoftDeleteTrait;
 
+    /**
+     * @var string[]
+     */
     protected $serializeFields = [
         'id',
         'customer',
@@ -77,6 +80,10 @@ class Order extends AbstractEntity
         return $this->customer;
     }
 
+    /**
+     * @param Customer|null $customer
+     * @return $this
+     */
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
@@ -84,11 +91,18 @@ class Order extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getTotal(): ?float
     {
         return $this->total;
     }
 
+    /**
+     * @param float $total
+     * @return $this
+     */
     public function setTotal(float $total): self
     {
         $this->total = $total;
@@ -96,11 +110,18 @@ class Order extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getDiscountedTotal(): ?float
     {
         return $this->discountedTotal;
     }
 
+    /**
+     * @param float $discountedTotal
+     * @return $this
+     */
     public function setDiscountedTotal(float $discountedTotal): self
     {
         $this->discountedTotal = $discountedTotal;
@@ -128,6 +149,10 @@ class Order extends AbstractEntity
         return $orderProduct;
     }
 
+    /**
+     * @param OrderProduct $orderProduct
+     * @return $this
+     */
     public function addOrderProduct(OrderProduct $orderProduct): self
     {
         if (!$this->orderProducts->contains($orderProduct)) {
@@ -138,6 +163,10 @@ class Order extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param OrderProduct $orderProduct
+     * @return $this
+     */
     public function removeOrderProduct(OrderProduct $orderProduct): self
     {
         if ($this->orderProducts->removeElement($orderProduct)) {
@@ -163,6 +192,9 @@ class Order extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function clearOrderProducts(): self
     {
         $orderProducts = $this->getOrderProducts();
@@ -173,6 +205,9 @@ class Order extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         $data = [

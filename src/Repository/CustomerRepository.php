@@ -14,11 +14,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CustomerRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Customer::class);
     }
 
+    /**
+     * @param Customer $customer
+     * @param bool $flush
+     * @return void
+     */
     public function save(Customer $customer, bool $flush = true): void
     {
         $this->_em->persist($customer);
@@ -27,6 +35,11 @@ class CustomerRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Customer $customer
+     * @param bool $flush
+     * @return void
+     */
     public function remove(Customer $customer, bool $flush = true): void
     {
         $this->_em->remove($customer);

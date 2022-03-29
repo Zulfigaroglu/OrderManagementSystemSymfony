@@ -9,13 +9,24 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class OrderProductEventListener
 {
+    /**
+     * @var ProductServiceInterface
+     */
     protected ProductServiceInterface $productService;
 
+    /**
+     * @param ProductServiceInterface $productService
+     */
     public function __construct(ProductServiceInterface $productService)
     {
         $this->productService = $productService;
     }
 
+    /**
+     * @param OrderProduct $orderProduct
+     * @param PreUpdateEventArgs $args
+     * @return void
+     */
     public function preUpdate(OrderProduct $orderProduct, PreUpdateEventArgs $args)
     {
         $product = $orderProduct->getProduct();
@@ -34,6 +45,11 @@ class OrderProductEventListener
         }
     }
 
+    /**
+     * @param OrderProduct $orderProduct
+     * @param LifecycleEventArgs $args
+     * @return void
+     */
     public function postPersist(OrderProduct $orderProduct, LifecycleEventArgs $args)
     {
         $product = $orderProduct->getProduct();

@@ -10,6 +10,9 @@ class DiscountPolicySubject implements ArrayableInterface
     const ANY_ITEM = 'any_item';
     const CHEAPEST_ITEM = 'cheapest_item';
 
+    /**
+     * @return string[]
+     */
     public static function toArray(): array
     {
         return [

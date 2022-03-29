@@ -24,6 +24,9 @@ class Customer extends AbstractEntity
 {
     use SoftDeleteTrait;
 
+    /**
+     * @var string[]
+     */
     protected $serializeFields = [
         'id',
         'name',
@@ -80,11 +83,18 @@ class Customer extends AbstractEntity
         parent::__construct();
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -92,11 +102,18 @@ class Customer extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return $this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -104,11 +121,18 @@ class Customer extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeImmutable|null
+     */
     public function getEmailVerfiedAt(): ?\DateTimeImmutable
     {
         return $this->emailVerfiedAt;
     }
 
+    /**
+     * @param \DateTimeImmutable $emailVerfiedAt
+     * @return $this
+     */
     public function setEmailVerfiedAt(\DateTimeImmutable $emailVerfiedAt): self
     {
         $this->emailVerfiedAt = $emailVerfiedAt;
@@ -116,11 +140,18 @@ class Customer extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -128,11 +159,18 @@ class Customer extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getRevenue(): ?string
     {
         return $this->revenue;
     }
 
+    /**
+     * @param string $revenue
+     * @return $this
+     */
     public function setRevenue(string $revenue): self
     {
         $this->revenue = $revenue;
@@ -148,6 +186,10 @@ class Customer extends AbstractEntity
         return $this->orders;
     }
 
+    /**
+     * @param Order $order
+     * @return $this
+     */
     public function addOrder(Order $order): self
     {
         if (!$this->orders->contains($order)) {
@@ -158,6 +200,10 @@ class Customer extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param Order $order
+     * @return $this
+     */
     public function removeOrder(Order $order): self
     {
         if ($this->orders->removeElement($order)) {

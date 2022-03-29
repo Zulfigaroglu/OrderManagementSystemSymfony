@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Infrastructure\AbstractController;
+use App\Exception\ValidationException;
 use App\Service\Infrastructure\DiscountServiceInterface;
 use App\Service\Infrastructure\OrderServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,9 +17,20 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class OrderController extends AbstractController
 {
+    /**
+     * @var OrderServiceInterface
+     */
     protected OrderServiceInterface $orderService;
+    /**
+     * @var DiscountServiceInterface
+     */
     protected DiscountServiceInterface $discountService;
 
+    /**
+     * @param ValidatorInterface $validator
+     * @param OrderServiceInterface $orderService
+     * @param DiscountServiceInterface $discountService
+     */
     public function __construct(ValidatorInterface $validator, OrderServiceInterface $orderService, DiscountServiceInterface $discountService)
     {
         parent::__construct($validator);
@@ -37,6 +49,7 @@ class OrderController extends AbstractController
 
     /**
      * @Route("", name="order_create", methods={"POST"})
+     * @throws ValidationException
      */
     public function crate(Request $request): Response
     {
@@ -64,6 +77,7 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/{id}", name="order_update", methods={"PUT"})
+     * @throws ValidationException
      */
     public function update(int $id, Request $request): Response
     {

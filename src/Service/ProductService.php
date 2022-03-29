@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Product;
+use App\Exception\NotFoundException;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Service\Infrastructure\ProductServiceInterface;
@@ -10,9 +11,20 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ProductService implements ProductServiceInterface
 {
+    /**
+     * @var ProductRepository
+     */
     protected ProductRepository $productRepository;
+
+    /**
+     * @var CategoryRepository
+     */
     protected CategoryRepository $categoryRepository;
 
+    /**
+     * @param ProductRepository $productRepository
+     * @param CategoryRepository $categoryRepository
+     */
     public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $this->productRepository = $productRepository;
@@ -27,11 +39,26 @@ class ProductService implements ProductServiceInterface
         return $this->productRepository->findAll();
     }
 
+    /**
+     * @param int $id
+     * @return Product
+     * @throws NotFoundException
+     */
     public function getById(int $id): Product
     {
-        return $this->productRepository->find($id);
+        $product = $this->productRepository->find($id);
+
+        if (!$product) {
+            throw new NotFoundException();
+        }
+
+        return $product;
     }
 
+    /**
+     * @param array $productData
+     * @return Product
+     */
     public function create(array $productData): Product
     {
         try {
@@ -44,6 +71,11 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param Product $product
+     * @param array $productData
+     * @return Product
+     */
     public function update(Product $product, array $productData): Product
     {
         try {
@@ -55,6 +87,10 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param Product $product
+     * @return void
+     */
     public function save(Product $product)
     {
         try {
@@ -64,6 +100,10 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param Product $product
+     * @return void
+     */
     public function delete(Product $product)
     {
         try {
@@ -73,6 +113,10 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function deleteById(int $id)
     {
         try {
@@ -83,6 +127,11 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param Product $product
+     * @param array $productData
+     * @return void
+     */
     public function updateProperties(Product $product, array $productData)
     {
         if (array_key_exists('categoryId', $productData)) {
@@ -102,6 +151,11 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param Product $product
+     * @param int $categoryId
+     * @return void
+     */
     public function attachCategoryById(Product $product, int $categoryId)
     {
         if ($categoryId) {
@@ -115,6 +169,11 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    /**
+     * @param Product $product
+     * @param int $count
+     * @return Product
+     */
     public function increaseStock(Product $product, int $count): Product
     {
         $increasedStock = $product->getStock() + $count;
@@ -123,6 +182,11 @@ class ProductService implements ProductServiceInterface
         return $product;
     }
 
+    /**
+     * @param Product $product
+     * @param int $count
+     * @return Product
+     */
     public function decreaseStock(Product $product, int $count): Product
     {
         $decreasedStock = $product->getStock() - $count;
@@ -131,6 +195,11 @@ class ProductService implements ProductServiceInterface
         return $product;
     }
 
+    /**
+     * @param Product $product
+     * @param int $quantity
+     * @return float
+     */
     public function calculateTotal(Product $product, int $quantity): float
     {
         $total = $product->getPrice() * $quantity;

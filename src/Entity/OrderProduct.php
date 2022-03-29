@@ -43,11 +43,18 @@ class OrderProduct extends AbstractEntity
         parent::__construct();
     }
 
+    /**
+     * @return Order|null
+     */
     public function getOrder(): ?Order
     {
         return $this->order;
     }
 
+    /**
+     * @param Order|null $order
+     * @return $this
+     */
     public function setOrder(?Order $order): self
     {
         $this->order = $order;
@@ -55,11 +62,18 @@ class OrderProduct extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Product|null
+     */
     public function getProduct(): ?Product
     {
         return $this->product;
     }
 
+    /**
+     * @param Product|null $product
+     * @return $this
+     */
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
@@ -67,11 +81,18 @@ class OrderProduct extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
+    /**
+     * @param int $quantity
+     * @return $this
+     */
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
@@ -79,11 +100,18 @@ class OrderProduct extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getTotal(): ?float
     {
         return $this->total;
     }
 
+    /**
+     * @param float $total
+     * @return $this
+     */
     public function setTotal(float $total): self
     {
         $this->total = $total;
@@ -91,6 +119,9 @@ class OrderProduct extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

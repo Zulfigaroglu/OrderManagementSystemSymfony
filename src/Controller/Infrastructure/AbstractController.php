@@ -9,8 +9,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractController extends AbstractControllerBase
 {
+    /**
+     * @var ValidatorInterface
+     */
     protected ValidatorInterface $validator;
 
+    /**
+     * @param ValidatorInterface $validator
+     */
     public function __construct(ValidatorInterface $validator)
     {
         $this->validator = $validator;
@@ -19,6 +25,8 @@ abstract class AbstractController extends AbstractControllerBase
     /**
      * @param $entity
      * @return void
+     * @throws ValidationException
+     * @throws \Exception
      */
     protected function validate($entity)
     {

@@ -3,14 +3,22 @@
 namespace App\Service;
 
 use App\Entity\Category;
+use App\Exception\NotFoundException;
 use App\Repository\CategoryRepository;
 use App\Service\Infrastructure\CategoryServiceInterface;
+use Doctrine\DBAL\Driver\Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CategoryService implements CategoryServiceInterface
 {
+    /**
+     * @var CategoryRepository
+     */
     protected CategoryRepository $categoryRepository;
 
+    /**
+     * @param CategoryRepository $categoryRepository
+     */
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
@@ -24,11 +32,26 @@ class CategoryService implements CategoryServiceInterface
         return $this->categoryRepository->findAll();
     }
 
+    /**
+     * @param int $id
+     * @return Category
+     * @throws NotFoundException
+     */
     public function getById(int $id): Category
     {
-        return $this->categoryRepository->find($id);
+        $category = $this->categoryRepository->find($id);
+
+        if (!$category) {
+            throw new NotFoundException();
+        }
+
+        return $category;
     }
 
+    /**
+     * @param array $categoryData
+     * @return Category
+     */
     public function create(array $categoryData): Category
     {
         try {
@@ -41,6 +64,11 @@ class CategoryService implements CategoryServiceInterface
         }
     }
 
+    /**
+     * @param Category $category
+     * @param array $categoryData
+     * @return Category
+     */
     public function update(Category $category, array $categoryData): Category
     {
         try {
@@ -52,6 +80,10 @@ class CategoryService implements CategoryServiceInterface
         }
     }
 
+    /**
+     * @param Category $category
+     * @return void
+     */
     public function save(Category $category)
     {
         try {
@@ -61,6 +93,10 @@ class CategoryService implements CategoryServiceInterface
         }
     }
 
+    /**
+     * @param Category $category
+     * @return void
+     */
     public function delete(Category $category)
     {
         try {
@@ -70,6 +106,10 @@ class CategoryService implements CategoryServiceInterface
         }
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function deleteById(int $id)
     {
         try {
@@ -80,6 +120,11 @@ class CategoryService implements CategoryServiceInterface
         }
     }
 
+    /**
+     * @param Category $category
+     * @param array $categoryData
+     * @return void
+     */
     public function updateProperties(Category $category, array $categoryData)
     {
         if (array_key_exists('name', $categoryData)) {

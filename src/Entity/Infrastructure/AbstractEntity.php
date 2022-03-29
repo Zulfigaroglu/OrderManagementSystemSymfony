@@ -11,6 +11,9 @@ use JsonSerializable;
  */
 abstract class AbstractEntity implements EntityInterface, JsonSerializable
 {
+    /**
+     * @var string[]
+     */
     protected $serializeFields = [
         'id',
         'createdAt',
@@ -40,21 +43,33 @@ abstract class AbstractEntity implements EntityInterface, JsonSerializable
      */
     protected ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCreatedAt(): ?string
     {
         return $this->createdAt ? $this->createdAt->format('Y-m-d H:i:s') : null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getUpdatedAt(): ?string
     {
         return $this->updatedAt ? $this->updatedAt->format('Y-m-d H:i:s') : null;
     }
 
+    /**
+     * @return bool
+     */
     public function hasSoftDelete(): bool
     {
         return false;
@@ -68,6 +83,9 @@ abstract class AbstractEntity implements EntityInterface, JsonSerializable
         $this->updatedAt = new \DateTimeImmutable('now');
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         $data = [];

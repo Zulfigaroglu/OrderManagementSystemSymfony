@@ -9,6 +9,7 @@ use App\Enum\DiscountConditionSubject;
 use App\Enum\DiscountConditionType;
 use App\Enum\DiscountPolicySubject;
 use App\Enum\DiscountPolicyType;
+use App\Exception\NotFoundException;
 use App\Model\DiscountDetailModel;
 use App\Model\OrderDiscountsModel;
 use App\Repository\CategoryRepository;
@@ -21,10 +22,26 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DiscountService implements DiscountServiceInterface
 {
+    /**
+     * @var OrderService|OrderServiceInterface
+     */
     protected OrderService $orderService;
+
+    /**
+     * @var DiscountRepository
+     */
     protected DiscountRepository $discountRepository;
+
+    /**
+     * @var CategoryRepository
+     */
     protected CategoryRepository $categoryRepository;
 
+    /**
+     * @param OrderServiceInterface $orderService
+     * @param DiscountRepository $discountRepository
+     * @param CategoryRepository $categoryRepository
+     */
     public function __construct(
         OrderServiceInterface $orderService,
         DiscountRepository    $discountRepository,
@@ -44,11 +61,26 @@ class DiscountService implements DiscountServiceInterface
         return $this->discountRepository->findAll();
     }
 
+    /**
+     * @param int $id
+     * @return Discount
+     * @throws NotFoundException
+     */
     public function getById(int $id): Discount
     {
-        return $this->discountRepository->find($id);
+        $discount = $this->discountRepository->find($id);
+
+        if (!$discount) {
+            throw new NotFoundException();
+        }
+
+        return $discount;
     }
 
+    /**
+     * @param array $discountData
+     * @return Discount
+     */
     public function create(array $discountData): Discount
     {
         try {
@@ -61,6 +93,11 @@ class DiscountService implements DiscountServiceInterface
         }
     }
 
+    /**
+     * @param Discount $discount
+     * @param array $discountData
+     * @return Discount
+     */
     public function update(Discount $discount, array $discountData): Discount
     {
         try {
@@ -72,6 +109,10 @@ class DiscountService implements DiscountServiceInterface
         }
     }
 
+    /**
+     * @param Discount $discount
+     * @return void
+     */
     public function save(Discount $discount)
     {
         try {
@@ -81,6 +122,10 @@ class DiscountService implements DiscountServiceInterface
         }
     }
 
+    /**
+     * @param Discount $discount
+     * @return void
+     */
     public function delete(Discount $discount)
     {
         try {
@@ -90,6 +135,10 @@ class DiscountService implements DiscountServiceInterface
         }
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function deleteById(int $id)
     {
         try {
@@ -100,6 +149,11 @@ class DiscountService implements DiscountServiceInterface
         }
     }
 
+    /**
+     * @param Discount $discount
+     * @param array $discountData
+     * @return void
+     */
     public function updateProperties(Discount $discount, array $discountData)
     {
         if (array_key_exists('categoryId', $discountData)) {
@@ -135,6 +189,11 @@ class DiscountService implements DiscountServiceInterface
         }
     }
 
+    /**
+     * @param Discount $discount
+     * @param int|null $categoryId
+     * @return void
+     */
     public function attachCategoryById(Discount $discount, ?int $categoryId)
     {
         if (!$categoryId) {
@@ -172,9 +231,10 @@ class DiscountService implements DiscountServiceInterface
     }
 
     /**
+     * @param int $id
      * @param int $orderId
-     * @return OrderDiscountsModel
-     * @throws Exception
+     * @return Order|null
+     * @throws NotFoundException
      */
     public function apply(int $id,int $orderId): ?Order
     {
@@ -316,6 +376,12 @@ class DiscountService implements DiscountServiceInterface
         return $items;
     }
 
+    /**
+     * @param Discount $discount
+     * @param Collection $items
+     * @return int
+     * @throws Exception
+     */
     protected function getAmountToBeDiscounted(Discount $discount, Collection $items): int
     {
         switch ($discount->getPolicySubject()) {

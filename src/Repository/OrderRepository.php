@@ -14,11 +14,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Order::class);
     }
 
+    /**
+     * @param Order $order
+     * @param bool $flush
+     * @return void
+     */
     public function save(Order $order, bool $flush = true): void
     {
         $this->_em->persist($order);
@@ -27,6 +35,11 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Order $order
+     * @param bool $flush
+     * @return void
+     */
     public function remove(Order $order, bool $flush = true): void
     {
         $this->_em->remove($order);

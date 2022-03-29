@@ -10,6 +10,9 @@ class DiscountPolicyType implements ArrayableInterface
     const DISCOUNT_BY_TOTAL = 'discount_by_total';
     const GIVE_FREE = 'give_free';
 
+    /**
+     * @return string[]
+     */
     public static function toArray(): array
     {
         return [

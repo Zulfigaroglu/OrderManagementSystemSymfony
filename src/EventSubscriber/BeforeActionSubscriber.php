@@ -7,8 +7,14 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ *
+ */
 class BeforeActionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -16,6 +22,10 @@ class BeforeActionSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param ControllerEvent $event
+     * @return void
+     */
     public function convertBodyDataFromJsonStringToAssociativeArray(ControllerEvent $event)
     {
         $request = $event->getRequest();

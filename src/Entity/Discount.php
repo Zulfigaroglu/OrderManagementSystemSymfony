@@ -17,6 +17,9 @@ class Discount extends AbstractEntity
 {
     use SoftDeleteTrait;
 
+    /**
+     * @var string[]
+     */
     protected $serializeFields = [
         'id',
         'name',
@@ -83,11 +86,18 @@ class Discount extends AbstractEntity
         parent::__construct();
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -95,11 +105,18 @@ class Discount extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * @param Category|null $category
+     * @return $this
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;

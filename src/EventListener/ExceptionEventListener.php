@@ -31,6 +31,10 @@ class ExceptionEventListener
         $event->setResponse($response);
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     function isJson($string) {
 
         return !is_null(json_decode($string));

@@ -45,11 +45,18 @@ class Product extends AbstractEntity
         parent::__construct();
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -57,11 +64,18 @@ class Product extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
+    /**
+     * @param float|null $price
+     * @return $this
+     */
     public function setPrice(?float $price): self
     {
         $this->price = $price;
@@ -69,11 +83,18 @@ class Product extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getStock(): ?int
     {
         return $this->stock;
     }
 
+    /**
+     * @param int $stock
+     * @return $this
+     */
     public function setStock(int $stock): self
     {
         $this->stock = $stock;
@@ -81,11 +102,18 @@ class Product extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * @param Category|null $category
+     * @return $this
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -93,6 +121,9 @@ class Product extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

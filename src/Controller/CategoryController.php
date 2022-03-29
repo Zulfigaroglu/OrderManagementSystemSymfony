@@ -16,8 +16,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class CategoryController extends AbstractController
 {
+    /**
+     * @var CategoryServiceInterface
+     */
     protected CategoryServiceInterface $categoryService;
 
+    /**
+     * @param ValidatorInterface $validator
+     * @param CategoryServiceInterface $categoryService
+     */
     public function __construct(ValidatorInterface $validator, CategoryServiceInterface $categoryService)
     {
         parent::__construct($validator);
